@@ -4,6 +4,7 @@ import "./App.css";
 import Navbar from "./navbar.jsx";
 import Home from "./home.jsx";
 import ContactMe from "./contactme.jsx";
+
 // import Blog from './Blog.jsx'; // Uncomment if you have a Blog page
 
 function App() {
@@ -28,8 +29,15 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/contact" element={<ContactMe />} />
-                <Route path="/blog" element={<div>Blog Page (Coming Soon)</div>} />
-                {/* <Route path="/blog" element={<Blog />} /> */}
+                <Route
+                path="/blog"
+                element={
+                    <div style={{ padding: "2rem", textAlign: "center" }}>
+                    <h2>Blog</h2>
+                    <p>Coming Soon!</p>
+                    </div>
+                }
+                />
             </Routes>
         </Router>
     );

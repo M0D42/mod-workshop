@@ -1,15 +1,15 @@
 {
-  "name": "m0d-workshop",
+  "name": "mod-workshop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://mod42.github.io/m0d-workshop",
+  "homepage": "https://mod42.github.io/mod-workshop",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
