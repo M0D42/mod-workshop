@@ -1,9 +1,8 @@
 {
-  "name": "mod-workshop",
+  "name": "m0d-workshop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://mod42.github.io/mod-workshop",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
