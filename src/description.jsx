@@ -7,7 +7,7 @@ function Description() {
     return (
         <div className="thins" >
             <a href="https://github.com/M0D42" target="_blank" rel="noopener noreferrer" className="fade-in">
-                <img src="./public/M0D.png" alt="profile" className="profile" />
+                <img src="./M0D.png" alt="profile" className="profile" />
             </a>
             <div className="text">
             <p className="fade-in">
