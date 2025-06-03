@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://mod42.github.io/mod-workshop",
-  "scripts": {
-    "dev": "vite",
-    "build": "npx vite build",
-    "preview": "npx vite preview",
-    "predeploy": "npm run build",
-    "deploy": "npx gh-pages -d dist"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "./node_modules/.bin/vite build",
+  "preview": "./node_modules/.bin/vite preview",
+  "predeploy": "npm run build",
+  "deploy": "./node_modules/.bin/gh-pages -d dist"
+},
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "react": "^19.0.0",
