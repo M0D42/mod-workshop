@@ -6,10 +6,10 @@
   "homepage": "https://mod42.github.io/mod-workshop",
 "scripts": {
   "dev": "vite",
-  "build": "./node_modules/.bin/vite build",
-  "preview": "./node_modules/.bin/vite preview",
+  "build": "vite build",
+  "preview": "vite preview",
   "predeploy": "npm run build",
-  "deploy": "./node_modules/.bin/gh-pages -d dist"
+  "deploy": "gh-pages -d dist"
 },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
