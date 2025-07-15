@@ -3,15 +3,15 @@ import "./newblog.css";
 
 const blogs = [
     {
-        title: "How I built a steamdeck power rc controller",
-        date: "2025-05-30",
-        summary: "A deep dive into building and hacking steamdeck, nrf24 and pygame.",
+        title: "coming soon",
+        date: "nd",
+        summary: "coming soon!!!!!!!!!!!!!!",
         link: "#"
     },
     {
-        title: "How to make projects faster",
+        title: "coming soon",
         date: "2025-05-20",
-        summary: "exploring the ways to make projects faster and more efficient and flow in your creative process.",
+        summary: "soon!!!!!!!!!!!!!!.",
         link: "#"
     }
     // Add more blog objects here
