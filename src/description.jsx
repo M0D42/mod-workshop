@@ -12,7 +12,7 @@ function Description() {
             <div className="text">
             <p className="fade-in">
                 Hi, I'm M0D.<br />
-               Leader of hacker gang <strong>BotSec</strong> from the moon, I specialize in creative hardware hacks, IoT automation, and web development. My projects range from Nerf turrets and Wi-Fi badges to ESP32 camera keychains and automated plant watering systems. I’m passionate about open-source collaboration, sharing guides and code under the MIT license, and infusing every project with a playful, rebellious edge. "Don’t ask or get hacked."
+               Leader of hacker gang <strong>BotSec</strong> from the moon, I specialize in creative hardware hacks, IoT automation, and web development. My projects range from Nerf turrets and Wi-Fi badges to ESP32 camera keychains and automated plant watering systems. I’m passionate about open-source maker and hacker, and infusing every project with a playful, rebellious edge. 
             </p>
             
             <p >Skills</p>
