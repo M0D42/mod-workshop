@@ -12,7 +12,7 @@ function Description() {
             <div className="text">
             <p className="fade-in">
                 Hi, I'm M0D.<br />
-                I'm a hacker who specializes in modifying and creating tech, especially electronics like NRF24 RC systems and website keychains. I love hacking things and repurposing them for new uses. I also enjoy building websites, including fan pages for my projects.
+               Leader of hacker gang <strong>BotSec</strong> from the moon, I specialize in creative hardware hacks, IoT automation, and web development. My projects range from Nerf turrets and Wi-Fi badges to ESP32 camera keychains and automated plant watering systems. I’m passionate about open-source collaboration, sharing guides and code under the MIT license, and infusing every project with a playful, rebellious edge. "Don’t ask or get hacked."
             </p>
             
             <p >Skills</p>
