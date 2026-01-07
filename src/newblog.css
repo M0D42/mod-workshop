@@ -46,7 +46,7 @@ body {
 .blog-slide-menu {
     background:
 
-        linear-gradient(rgba(37,20,56,0.95), rgba(37,20,56,0.95)),
+        
         url('./castle.jpg') repeat;
     padding: 32px 20px 20px 20px;
     border-radius: 0;
