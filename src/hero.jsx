@@ -43,7 +43,7 @@ function Hero() {
     // 👨‍🚀 Astronaut
     const astronaut = new Image();
     astronaut.src =
-      "https://pnghq.com/wp-content/uploads/astronaut-png-photos-free-png-images-97212-768x859.png";
+      "astronaut.png";
 
     let x = canvas.width / 2;
     let y = canvas.height / 2;
