@@ -43,7 +43,7 @@ function Hero() {
     // 👨‍🚀 Astronaut
     const astronaut = new Image();
     astronaut.src =
-      "astronaut.png";
+      "./astronaut.png";
 
     let x = canvas.width / 2;
     let y = canvas.height / 2;
