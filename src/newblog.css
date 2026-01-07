@@ -1,3 +1,4 @@
+/* fixed newblog.css - corrected background syntax and small cleanups */
 
 .open-blog-menu {
     /* ...other styles... */
@@ -14,28 +15,13 @@
     border-radius: 0;
 }
 
-.open-blog-menu {
-    /* position: fixed;
-    top: 24px;
-    left: 24px;
-    z-index: 1200; */
-    padding: 10px 20px;
-    background: #ce7eff;
-    color: #18181b;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    margin-bottom: 24px;
-    margin-top: 0;
-    display: inline-block;
-}
-/* Add to your global CSS (e.g., App.css or index.css) */
+/* primary page background */
 body {
     margin: 0;
     background: #232323; /* Match your dark section background */
 }
 
+/* heading in slide menu */
 .blog-slide-menu h2 {
     color: #fff;
     margin-top: 0;
@@ -44,8 +30,11 @@ body {
     font-family: inherit;
     text-align: left;
 }
+
+/* Use valid CSS for the background. If castle.jpg is located relative to this CSS file,
+   the relative URL below should work when processed by your bundler. */
 .blog-slide-menu {
- backgroundImage: url('./castle.jpg'), repeat;
+    background: url('./castle.jpg') repeat;
     padding: 32px 20px 20px 20px;
     border-radius: 0;
     box-shadow: 0 4px 24px rgba(0,0,0,0.18);
@@ -60,7 +49,6 @@ body {
     overflow-x: auto;
     overflow-y: visible;
     transition: none;
-
 }
 
 .blog-slide-menu ul {
@@ -98,7 +86,7 @@ body {
     box-shadow: 0 4px 24px 0 rgba(0,0,0,0.15), 0 0 0 1.5px #ce7eff33;
     backdrop-filter: blur(4px);
     border: 1.5px solid #ce7eff33;
-    transition: 
+    transition:
         transform 0.2s,
         box-shadow 0.2s,
         background 0.2s;
