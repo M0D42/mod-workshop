@@ -39,7 +39,7 @@ body {
     background-color: #2a0036;
 
     /* repeat the image */
-    background-image: url('./castle.jpg');
+    background-image: url('./castle.png');
     background-repeat: repeat;       /* <-- forces repeating */
     background-position: 0 0;        /* origin of the tiling */
     background-size: auto;           /* keep natural image size so it tiles */
