@@ -14,7 +14,6 @@
     background-repeat: repeat;      /* tile the image */
     background-position: 0 0;
     background-size: auto;          /* keep natural image size so it tiles */
-    background-color: transparent;  /* no tint from container */
 
     /* ensure no accidental blending/filtering */
     background-blend-mode: normal;
