@@ -1,4 +1,4 @@
-/* fixed newblog.css - corrected background syntax and small cleanups */
+/* updated newblog.css: ensure the background image repeats and add fallbacks/notes */
 
 .open-blog-menu {
     /* ...other styles... */
@@ -31,10 +31,21 @@ body {
     text-align: left;
 }
 
-/* Use valid CSS for the background. If castle.jpg is located relative to this CSS file,
-   the relative URL below should work when processed by your bundler. */
+/* Use valid CSS and make the image repeat.
+   If the image is in public/, use url('/castle.jpg').
+   If it's next to this CSS and the bundler resolves it, use url('./castle.jpg'). */
 .blog-slide-menu {
-    background: url('./castle.jpg') repeat;
+    /* fallback color if image fails */
+    background-color: #2a0036;
+
+    /* repeat the image */
+    background-image: url('./castle.jpg');
+    background-repeat: repeat;       /* <-- forces repeating */
+    background-position: 0 0;        /* origin of the tiling */
+    background-size: auto;           /* keep natural image size so it tiles */
+    background-attachment: scroll;   /* default; change to fixed if needed */
+    background-blend-mode: normal;   /* avoid accidental blending that dims colors */
+
     padding: 32px 20px 20px 20px;
     border-radius: 0;
     box-shadow: 0 4px 24px rgba(0,0,0,0.18);
