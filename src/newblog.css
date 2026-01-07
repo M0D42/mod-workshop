@@ -1,3 +1,5 @@
+import castle from './assets/castle.jpg';
+
 .open-blog-menu {
     /* ...other styles... */
     border-radius: 0;
@@ -44,10 +46,7 @@ body {
     text-align: left;
 }
 .blog-slide-menu {
-    background:
-
-        
-        url('./castle.jpg') repeat;
+ backgroundImage: `url(${castle})`, repeat;
     padding: 32px 20px 20px 20px;
     border-radius: 0;
     box-shadow: 0 4px 24px rgba(0,0,0,0.18);
