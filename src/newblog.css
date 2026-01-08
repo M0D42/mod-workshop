@@ -39,16 +39,16 @@ body {
 .blog-slide-menu {
     /* Background tile */
     background-image: url('/castle.png');
-    background-repeat: repeat-y;
+    background-repeat: repeat;
     background-position: top center;
     background-size: auto;
-
+ 
     /* Prevent blending artifacts */
     background-blend-mode: normal;
     filter: none;
 
     /* Layout */
-    width: 100%;
+    width: 95%;
     max-width: 100%;
     margin: 0;
     padding: 48px 20px 32px 20px;
