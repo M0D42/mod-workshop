@@ -22,6 +22,7 @@ function NewBlog() {
 
     return (
         <>
+            <div className={`blog-slide-menu${open ? " open" : ""}`}>
 
                 <h2>New Blogs</h2>
                 <ul>
