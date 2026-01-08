@@ -132,13 +132,14 @@
     left: 24px;
     z-index: 1200;
     padding: 10px 20px;
-    background: #18181b
+    background-color: #18181b
     color: #18181b;
     border: none;
     border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    
 }
 
 .close-blog-menu {
