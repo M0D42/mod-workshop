@@ -3,6 +3,7 @@
 .open-blog-menu {
     /* ...other styles... */
     border-radius: 0;
+    
 }
 
 .blog-slide-menu {
@@ -66,7 +67,7 @@
     background: transparent;
 }
 .blog-slide-menu ul::-webkit-scrollbar-thumb {
-    background: #ce7eff;
+    background: #023020;
     border-radius: 4px;
 }
 
