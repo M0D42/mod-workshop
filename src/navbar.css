@@ -1,6 +1,6 @@
 .navbar {
     width: 100%;
-    background: #18181b;
+    background: #0AF5A3 ;
     color: #fff;
     padding: 16px 32px;
     position: fixed;
@@ -23,5 +23,5 @@
 }
 
 .navbar a:hover {
-    color: #ce7eff;
+    color: #18181b;
 }
