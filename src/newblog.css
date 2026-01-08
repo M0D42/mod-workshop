@@ -12,7 +12,9 @@
        - next to this CSS and processed by bundler -> url('./castle.png')
     */
     background-image: url('/castle.png');
-    background-repeat: repeat;      /* tile the image */
+    background-repeat: repeat;
+    background-repeat: repeat-y;
+    /* tile the image */
     background-position: 0 0;
     background-size: auto;          /* keep natural image size so it tiles */
 
@@ -21,13 +23,12 @@
     filter: none;
     -webkit-filter: none;
 
-    padding: 32px 20px 20px 20px;
     border-radius: 0;
     box-shadow: 0 4px 24px rgba(0,0,0,0.18);
     width: 95vw;
     max-width: 100vw;
-    margin: 48px auto 0 auto;
-    min-height: 340px;
+    margin: 0 auto;
+    padding-top: 48px;    min-height: 340px;
     position: static;
     overflow-x: auto;
     overflow-y: visible;
