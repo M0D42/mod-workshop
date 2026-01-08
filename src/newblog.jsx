@@ -22,10 +22,6 @@ function NewBlog() {
 
     return (
         <>
-            <button className="open-blog-menu" onClick={() => setOpen(true)}>
-                Open Blogs
-            </button>
-            <div className={`blog-slide-menu${open ? " open" : ""}`}>
 
                 <h2>New Blogs</h2>
                 <ul>
