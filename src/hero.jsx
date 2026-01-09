@@ -1,67 +1,44 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./hero.css";
 
-function Hero() {
+export default function Hero() {
   const canvasRef = useRef(null);
+  const [page, setPage] = useState(0);
+  const [flip, setFlip] = useState(0); // 0 → 1 animation
+
+  const pages = 5;
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    let page = 0;
-    const pages = 5;
+    const W = 900;
+    const H = 460;
+    canvas.width = W;
+    canvas.height = H;
 
-    const prevBtn = { x: 40, y: 380, w: 90, h: 32 };
-    const nextBtn = { x: 160, y: 380, w: 90, h: 32 };
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = 460;
-      draw();
-    };
-
-    window.addEventListener("resize", resize);
-    resize();
-
-    /* ================= DRAW LOOP ================= */
-
-    function draw() {
-      drawParchment();
-      drawBinding();
-      drawGlow();
-      drawPage(page);
-      drawButtons();
-      drawPageNumber();
-    }
-
-    /* ================= PAPER ================= */
+    let glow = 0;
 
     function drawParchment() {
-      ctx.fillStyle = "rgb(238,220,185)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#f1e2bf";
+      ctx.fillRect(0, 0, W, H);
 
-      for (let i = 0; i < 200; i++) {
-        ctx.fillStyle = "rgba(190,165,125,0.25)";
-        ctx.fillRect(
-          Math.random() * canvas.width,
-          Math.random() * canvas.height,
-          1,
-          1
-        );
+      // grain
+      for (let i = 0; i < 250; i++) {
+        ctx.fillStyle = "rgba(120,90,60,0.05)";
+        ctx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
       }
 
-      ctx.strokeStyle = "rgb(140,110,70)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+      // border
+      ctx.strokeStyle = "#8b6a42";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(18, 18, W - 36, H - 36);
     }
 
-    /* ================= BINDING ================= */
-
     function drawBinding() {
-      ctx.strokeStyle = "rgb(110,80,50)";
+      ctx.strokeStyle = "#6b4b2a";
       ctx.lineWidth = 3;
-      for (let y = 70; y < canvas.height - 70; y += 26) {
+      for (let y = 70; y < H - 70; y += 26) {
         ctx.beginPath();
         ctx.moveTo(60, y);
         ctx.lineTo(60, y + 14);
@@ -69,199 +46,124 @@ function Hero() {
       }
     }
 
-    /* ================= MAGIC GLOW ================= */
-
     function drawGlow() {
-      const grad = ctx.createRadialGradient(
-        canvas.width / 2,
-        120,
-        40,
-        canvas.width / 2,
-        120,
-        300
-      );
-      grad.addColorStop(0, "rgba(255,220,140,0.25)");
-      grad.addColorStop(1, "rgba(255,220,140,0)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      glow += 0.02;
+      const g = ctx.createRadialGradient(W / 2, 110, 40, W / 2, 110, 320);
+      g.addColorStop(0, `rgba(255,220,150,${0.25 + Math.sin(glow) * 0.05})`);
+      g.addColorStop(1, "rgba(255,220,150,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
     }
 
-    /* ================= PAGE CONTENT ================= */
+    function drawButtons() {
+      drawButton(80, H - 60, 90, 32, "◀ Prev");
+      drawButton(200, H - 60, 90, 32, "Next ▶");
+    }
 
-    function drawPage(p) {
+    function drawButton(x, y, w, h, label) {
+      ctx.fillStyle = "#d6b98c";
+      ctx.strokeStyle = "#8b6a42";
+      ctx.lineWidth = 2;
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeRect(x, y, w, h);
+
+      ctx.fillStyle = "#3a2614";
+      ctx.font = "bold 14px Georgia";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(label, x + w / 2, y + h / 2);
+    }
+
+    function drawPageContent(p, offsetX = 0) {
       ctx.save();
-      ctx.translate(90, 70);
+      ctx.translate(100 + offsetX, 80);
 
-      if (p === 0) coverPage();
-      if (p === 1) manaCircuit();
-      if (p === 2) spellLogic();
-      if (p === 3) automaton();
-      if (p === 4) warningPage();
+      ctx.fillStyle = "#5a3b1f";
+      ctx.font = "28px Georgia";
+      ctx.textAlign = "center";
+
+      if (p === 0) {
+        ctx.fillText("ARTIFICER NOTEBOOK", 300, 40);
+        ctx.font = "16px Georgia";
+        ctx.fillText("of Arcane Creations", 300, 80);
+        ctx.fillText("and Concepts", 300, 100);
+
+        ctx.strokeStyle = "#7a5733";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(300, 190, 60, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      if (p === 1) ctx.fillText("Mana Circuit Diagram", 300, 80);
+      if (p === 2) ctx.fillText("Spell Logic Gates", 300, 80);
+      if (p === 3) ctx.fillText("Automaton Assembly", 300, 80);
+      if (p === 4) ctx.fillText("⚠ Failed Experiment", 300, 80);
 
       ctx.restore();
     }
 
-    function coverPage() {
-      ctx.textAlign = "center";
-      ctx.fillStyle = "rgb(120,85,45)";
-      ctx.font = "30px Georgia";
-      ctx.fillText(
-        "ARTIFICER NOTEBOOK",
-        canvas.width / 2 - 90,
-        90
-      );
+    function drawFlip() {
+      if (flip <= 0) return;
 
-      ctx.font = "16px Georgia";
-      ctx.fillStyle = "rgb(90,60,35)";
-      ctx.fillText("of Arcane Creations", canvas.width / 2 - 90, 130);
-      ctx.fillText("and Concepts", canvas.width / 2 - 90, 155);
+      ctx.fillStyle = `rgba(0,0,0,${0.2 * flip})`;
+      ctx.fillRect(0, 0, W, H);
 
-      ctx.strokeStyle = "rgb(150,110,70)";
+      ctx.fillStyle = "#e9d7b0";
       ctx.beginPath();
-      ctx.moveTo(140, 180);
-      ctx.lineTo(340, 180);
-      ctx.stroke();
-
-      ctx.strokeStyle = "rgb(120,90,60)";
-      ctx.beginPath();
-      ctx.arc(240, 255, 50, 0, Math.PI * 2);
-      ctx.arc(240, 255, 32, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.fillStyle = "rgb(90,60,35)";
-      ctx.font = "14px Georgia";
-      ctx.fillText(
-        "Property of the Guild Artificer",
-        canvas.width / 2 - 90,
-        330
-      );
+      ctx.moveTo(W - 20 - flip * 300, 20);
+      ctx.lineTo(W - 20, 20);
+      ctx.lineTo(W - 20, H - 20);
+      ctx.lineTo(W - 20 - flip * 300, H - 20);
+      ctx.closePath();
+      ctx.fill();
     }
 
-    function manaCircuit() {
-      ctx.strokeStyle = "rgb(70,45,25)";
-      ctx.lineWidth = 2;
-      jitterLine(40, 120, 260, 120);
-      ctx.beginPath();
-      ctx.arc(40, 120, 8, 0, Math.PI * 2);
-      ctx.arc(260, 120, 8, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.fillStyle = "rgb(70,45,25)";
-      ctx.font = "18px Georgia";
-      ctx.fillText("Mana Conduit Flow", 40, 80);
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      drawParchment();
+      drawBinding();
+      drawGlow();
+      drawPageContent(page);
+      drawFlip();
+      drawButtons();
+      requestAnimationFrame(draw);
     }
 
-    function spellLogic() {
-      ctx.strokeStyle = "rgb(70,45,25)";
-      ctx.strokeRect(60, 80, 80, 44);
-      ctx.strokeRect(200, 80, 80, 44);
+    draw();
 
-      ctx.beginPath();
-      ctx.moveTo(20, 102);
-      ctx.lineTo(60, 102);
-      ctx.moveTo(140, 102);
-      ctx.lineTo(200, 102);
-      ctx.moveTo(280, 102);
-      ctx.lineTo(340, 102);
-      ctx.stroke();
-
-      ctx.fillStyle = "rgb(70,45,25)";
-      ctx.fillText("AND Rune", 62, 72);
-      ctx.fillText("OR Sigil", 202, 72);
-    }
-
-    function automaton() {
-      ctx.strokeStyle = "rgb(70,45,25)";
-      ctx.beginPath();
-      ctx.arc(140, 120, 30, 0, Math.PI * 2);
-      ctx.moveTo(140, 150);
-      ctx.lineTo(140, 230);
-      ctx.moveTo(140, 180);
-      ctx.lineTo(100, 220);
-      ctx.moveTo(140, 180);
-      ctx.lineTo(180, 220);
-      ctx.stroke();
-
-      ctx.fillText("Golem Core Assembly", 70, 70);
-    }
-
-    function warningPage() {
-      ctx.strokeStyle = "rgb(130,45,45)";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(40, 40);
-      ctx.lineTo(300, 220);
-      ctx.moveTo(300, 40);
-      ctx.lineTo(40, 220);
-      ctx.stroke();
-
-      ctx.fillStyle = "rgb(130,45,45)";
-      ctx.font = "26px Georgia";
-      ctx.fillText("FAILED", 90, 120);
-      ctx.fillText("EXPERIMENT", 70, 150);
-    }
-
-    /* ================= BUTTONS ================= */
-
-    function drawButtons() {
-      drawButton(prevBtn, "◀ Prev");
-      drawButton(nextBtn, "Next ▶");
-    }
-
-    function drawButton(b, label) {
-      ctx.fillStyle = "rgb(200,170,130)";
-      ctx.strokeStyle = "rgb(120,90,60)";
-      ctx.lineWidth = 2;
-      ctx.fillRect(b.x, b.y, b.w, b.h);
-      ctx.strokeRect(b.x, b.y, b.w, b.h);
-
-      ctx.fillStyle = "rgb(60,40,20)";
-      ctx.font = "14px Georgia";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(label, b.x + b.w / 2, b.y + b.h / 2);
-    }
-
-    function drawPageNumber() {
-      ctx.textAlign = "right";
-      ctx.fillStyle = "rgb(100,75,50)";
-      ctx.fillText(`Page ${page}`, canvas.width - 50, canvas.height - 28);
-    }
-
-    function jitterLine(x1, y1, x2, y2) {
-      ctx.beginPath();
-      for (let i = 0; i <= 1; i += 0.1) {
-        ctx.lineTo(
-          x1 + (x2 - x1) * i + Math.random() * 2 - 1,
-          y1 + (y2 - y1) * i + Math.random() * 2 - 1
-        );
-      }
-      ctx.stroke();
-    }
-
-    canvas.addEventListener("mousedown", (e) => {
+    canvas.onclick = (e) => {
       const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-      if (hit(mx, my, prevBtn)) page = (page - 1 + pages) % pages;
-      if (hit(mx, my, nextBtn)) page = (page + 1) % pages;
-      draw();
-    });
+      if (x > 80 && x < 170 && y > H - 60 && y < H - 28) {
+        triggerFlip(-1);
+      }
 
-    function hit(mx, my, b) {
-      return mx > b.x && mx < b.x + b.w && my > b.y && my < b.y + b.h;
+      if (x > 200 && x < 290 && y > H - 60 && y < H - 28) {
+        triggerFlip(1);
+      }
+    };
+
+    function triggerFlip(dir) {
+      let t = 0;
+      const anim = () => {
+        t += 0.08;
+        setFlip(t);
+        if (t < 1) requestAnimationFrame(anim);
+        else {
+          setPage((p) => (p + dir + pages) % pages);
+          setFlip(0);
+        }
+      };
+      anim();
     }
-
-    return () => window.removeEventListener("resize", resize);
-  }, []);
+  }, [page]);
 
   return (
     <div className="Hero">
-      <canvas ref={canvasRef} className="canvas" />
-      <h1>Artificer Workshop</h1>
+      <canvas ref={canvasRef} />
     </div>
   );
 }
-
-export default Hero;
