@@ -1,17 +1,17 @@
 /* ================================
-   GLOBAL FIXES (IMPORTANT)
+   GLOBAL FIXES
    ================================ */
 
 html,
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* prevents 100vw scrollbar bugs */
-    background-color: #000; /* fallback behind tiles */
+    overflow-x: hidden;
+    background-color: #0e0b08;
 }
 
 /* ================================
-   OPEN MENU BUTTON
+   OPEN MENU BUTTON (FORGE SWITCH)
    ================================ */
 
 .open-blog-menu {
@@ -20,47 +20,78 @@ body {
     left: 24px;
     z-index: 1200;
 
-    padding: 10px 20px;
-    background-color: #688061;
-    color: #18181b;
+    padding: 12px 22px;
 
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
+    background:
+        linear-gradient(180deg, #9a7a4a, #6e5331);
+
+    color: #1a120a;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+
+    border: 1px solid rgba(255,220,160,0.45);
+    border-radius: 999px;
     cursor: pointer;
 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow:
+        inset 0 0 8px rgba(255,255,255,0.25),
+        0 6px 18px rgba(0,0,0,0.45);
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.open-blog-menu:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 0 10px rgba(255,255,255,0.35),
+        0 10px 28px rgba(0,0,0,0.55);
 }
 
 /* ================================
-   BLOG SLIDE MENU (MAIN CONTAINER)
+   BLOG SLIDE MENU (CASTLE WALL)
    ================================ */
 
 .blog-slide-menu {
-    /* Background tile */
+    position: relative;
+    overflow: hidden;
+
     background-image: url('/castle.png');
+   background-size: 400px auto;
+
     background-repeat: repeat;
     background-position: top center;
     background-size: auto;
- 
-    /* Prevent blending artifacts */
-    background-blend-mode: normal;
-    filter: none;
 
-    /* Layout */
+    /* Dark stone overlay for readability */
+    background-color: rgba(15, 10, 6, 0.78);
+    background-blend-mode: multiply;
+
     width: 95%;
     max-width: 100%;
     margin: 0;
-    padding: 48px 20px 32px 64px;
-    min-height: 340px;
+    padding: 56px 28px 40px 72px;
+    min-height: 360px;
 
-    /* Visuals */
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
     border-radius: 0;
 
-    /* Critical fixes */
-    overflow-x: hidden; /* stops sideways shift */
-    display: flow-root; /* prevents margin collapse */
+    box-shadow:
+        inset 0 0 40px rgba(0,0,0,0.6),
+        0 12px 40px rgba(0,0,0,0.55);
+
+    display: flow-root;
+}
+
+/* subtle vignette */
+.blog-slide-menu::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        radial-gradient(circle at top,
+            rgba(255,200,140,0.12),
+            rgba(0,0,0,0.85) 70%);
 }
 
 /* ================================
@@ -68,10 +99,18 @@ body {
    ================================ */
 
 .blog-slide-menu h2 {
-    color: #ffffff;
-    margin: 0 0 24px 0;
-    font-size: 2rem;
-    text-align: left;
+    position: relative;
+    margin: 0 0 28px 0;
+
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+
+    color: #f2d49c;
+
+    text-shadow:
+        0 3px 10px rgba(0,0,0,0.75),
+        0 0 20px rgba(242,212,156,0.25);
 }
 
 /* ================================
@@ -81,7 +120,7 @@ body {
 .blog-slide-menu ul {
     display: flex;
     flex-direction: row;
-    gap: 18px;
+    gap: 22px;
 
     list-style: none;
     padding: 0;
@@ -92,18 +131,19 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Scrollbar styling */
+/* Forged scrollbar */
 .blog-slide-menu ul::-webkit-scrollbar {
     height: 8px;
 }
 
 .blog-slide-menu ul::-webkit-scrollbar-thumb {
-    background: #023020;
+    background:
+        linear-gradient(180deg, #9a7a4a, #6e5331);
     border-radius: 4px;
 }
 
 /* ================================
-   BLOG POST CARDS
+   BLOG POST CARDS (IRON PANELS)
    ================================ */
 
 .blog-post {
@@ -111,27 +151,34 @@ body {
     max-width: 300px;
     flex: 0 0 auto;
 
-    margin: 12px 0;
-    padding: 22px 20px 18px 20px;
+    margin: 14px 0;
+    padding: 24px 22px 20px;
 
-    background: rgba(0, 0, 0, 0.66);
-    color: #ffffff;
+    background:
+        linear-gradient(180deg,
+            rgba(30,18,10,0.92),
+            rgba(10,6,4,0.92));
 
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.04);
+    color: #f5e6c8;
 
-    box-shadow: 0 6px 28px rgba(0,0,0,0.32);
+    border-radius: 16px;
+    border: 1px solid rgba(242,212,156,0.25);
 
-    transition: transform 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
+    box-shadow:
+        inset 0 0 14px rgba(0,0,0,0.65),
+        0 10px 32px rgba(0,0,0,0.55);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
-/* Hover effect (subtle, no glow) */
 .blog-post:hover {
     transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.38);
-    background: rgba(0,0,0,0.72);
+    box-shadow:
+        inset 0 0 18px rgba(0,0,0,0.7),
+        0 16px 44px rgba(0,0,0,0.7);
 }
 
 /* ================================
@@ -141,8 +188,8 @@ body {
 .blog-post h2,
 .blog-post h3,
 .blog-post .title {
-    color: #ffffff;
     margin: 0 0 8px 0;
+    color: #ffdca8;
     line-height: 1.2;
 }
 
@@ -150,7 +197,7 @@ body {
 .blog-post .description,
 .blog-post span,
 .blog-post li {
-    color: #e6e6e6;
+    color: #e6d9c2;
     line-height: 1.45;
 }
 
@@ -161,18 +208,20 @@ body {
 }
 
 /* ================================
-   CLOSE BUTTON
+   CLOSE BUTTON (SIGIL)
    ================================ */
 
 .close-blog-menu {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 18px;
+    right: 18px;
 
     background: none;
     border: none;
 
-    color: #ce7eff;
-    font-size: 2rem;
+    color: #ffdca8;
+    font-size: 2.2rem;
     cursor: pointer;
+
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
