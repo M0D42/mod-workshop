@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 
 export default function Hero() {
@@ -5,12 +7,15 @@ export default function Hero() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     let page = 0;
 
     /* =====================
-       SIZE (FIXED HERO)
+       CONSTANTS
     ===================== */
     const HERO_H = 520;
     const BOOK_W = 760;
@@ -23,6 +28,7 @@ export default function Hero() {
       canvas.height = HERO_H;
       draw();
     }
+
     window.addEventListener("resize", resize);
     resize();
 
@@ -33,13 +39,14 @@ export default function Hero() {
       const c = document.createElement("canvas");
       c.width = PAGE_W;
       c.height = PAGE_H;
-      drawFn(c.getContext("2d"));
+      const g = c.getContext("2d");
+      drawFn(g);
       return c;
     }
 
     const pages = [];
 
-    /* -------- PAGE 0 : COVER -------- */
+    /* PAGE 0 — COVER */
     pages.push(
       makePage((c) => {
         parchment(c);
@@ -53,7 +60,7 @@ export default function Hero() {
       })
     );
 
-    /* -------- PAGE 1 : SPELL LOGIC (GLOW) -------- */
+    /* PAGE 1 — SPELL LOGIC (GLOW) */
     pages.push(
       makePage((c) => {
         parchment(c);
@@ -81,7 +88,7 @@ export default function Hero() {
       })
     );
 
-    /* -------- PAGE 2 : AUTOMATON -------- */
+    /* PAGE 2 — AUTOMATON */
     pages.push(
       makePage((c) => {
         parchment(c);
@@ -115,11 +122,11 @@ export default function Hero() {
       const bx = (canvas.width - BOOK_W) / 2;
       const by = (canvas.height - BOOK_H) / 2;
 
-      /* parchment background (NOT black) */
+      /* HERO BACKGROUND (LIGHT) */
       ctx.fillStyle = "#e7d3aa";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      /* book */
+      /* BOOK */
       ctx.fillStyle = "#f0deb8";
       ctx.fillRect(bx, by, BOOK_W, BOOK_H);
 
@@ -127,7 +134,7 @@ export default function Hero() {
       ctx.lineWidth = 4;
       ctx.strokeRect(bx, by, BOOK_W, BOOK_H);
 
-      /* binding */
+      /* BINDING */
       ctx.strokeStyle = "#5a3c1d";
       for (let y = 50; y < BOOK_H - 50; y += 26) {
         ctx.beginPath();
@@ -136,12 +143,8 @@ export default function Hero() {
         ctx.stroke();
       }
 
-      /* page */
-      ctx.drawImage(
-        pages[page],
-        bx + 140,
-        by + 70
-      );
+      /* PAGE */
+      ctx.drawImage(pages[page], bx + 140, by + 70);
 
       button(bx + 140, by + BOOK_H - 60, "◀ Prev");
       button(bx + BOOK_W - 240, by + BOOK_H - 60, "Next ▶");
@@ -202,5 +205,14 @@ export default function Hero() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        display: "block",
+        margin: "0 auto",
+        background: "#e7d3aa"
+      }}
+    />
+  );
 }
