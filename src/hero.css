@@ -3,15 +3,18 @@
   justify-content: center;
   align-items: center;
   padding: 80px 0;
+
   background: radial-gradient(
     ellipse at center,
     #f6e8c8 0%,
     #d7c19a 55%,
     #1a120a 100%
   );
+
+  isolation: isolate;
 }
 
-canvas {
+.Hero canvas {
   border-radius: 10px;
   box-shadow:
     0 18px 40px rgba(0,0,0,0.45),
