@@ -1,22 +1,48 @@
+/* Hero container styling */
 .Hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 80px 0;
-
-  background: radial-gradient(
-    ellipse at center,
-    #f6e8c8 0%,
-    #d7c19a 55%,
-    #1a120a 100%
-  );
-
-  isolation: isolate;
+    position: relative;
+    width: 100vw;
+    height: 80vh;
+    background-color: black !important; /* Force black background */
+    overflow: hidden;
 }
 
-.Hero canvas {
-  border-radius: 10px;
-  box-shadow:
-    0 18px 40px rgba(0,0,0,0.45),
-    inset 0 0 40px rgba(0,0,0,0.2);
+/* Star styling */
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+}
+
+/* h1 styling */
+h1 {
+    position: absolute; /* Position the text absolutely */
+    top: 50%; /* Center vertically */
+    right: 5%; /* Move it to the right side of the screen */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    color: white; /* Keep the text white */
+    text-align: right; /* Align text to the right */
+    font-family: 'Inconsolata', monospace;
+    font-size: 3rem; /* Adjust font size */
+}
+
+/* Font-face declaration for Sex Pistols font */
+@font-face {
+    font-family: 'Sex Pistols';
+    src: url('/assets/fonts/SexPistols.ttf') format('truetype'); /* Correct absolute path */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Twinkle animation for stars */
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
 }
