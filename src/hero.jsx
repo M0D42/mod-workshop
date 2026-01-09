@@ -1,124 +1,167 @@
-useEffect(() => {
-  const canvas = canvasRef.current;
-  const ctx = canvas.getContext("2d");
+import React, { useEffect, useRef } from "react";
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = 520;
-  }
-  resize();
-  window.addEventListener("resize", resize);
+export default function Hero() {
+  const canvasRef = useRef(null);
 
-  let page = 0;
-  const pages = 5;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
 
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let page = 0;
 
-    // background (transparent / unchanged site bg)
-    ctx.fillStyle = "rgba(0,0,0,0)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const pages = [
+      {
+        title: "ARTIFICER NOTEBOOK",
+        body: [
+          "Arcane Creations",
+          "& Mechanical Concepts",
+          "",
+          "Property of the Guild",
+        ],
+      },
+      {
+        title: "SPELL LOGIC GATES",
+        body: [
+          "AND → Dual Runes",
+          "OR → Parallel Sigils",
+          "NOT → Inversion Glyph",
+          "",
+          "Mana-efficient designs",
+        ],
+      },
+      {
+        title: "SCHEMATIC NOTES",
+        body: [
+          "Copper runes etched",
+          "Aether crystal core",
+          "Rotational stabilizer",
+          "",
+          "⚠ unstable prototype",
+        ],
+      },
+    ];
 
-    // CENTER NOTEBOOK
-    const bookW = 780;
-    const bookH = 440;
-    const x = (canvas.width - bookW) / 2;
-    const y = (canvas.height - bookH) / 2;
-
-    drawShadow(x, y, bookW, bookH);
-    drawBook(x, y, bookW, bookH);
-    drawPageContent(x, y, page);
-    drawButtons(x, y, bookW, bookH);
-  }
-
-  function drawShadow(x, y, w, h) {
-    ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,0.5)";
-    ctx.shadowBlur = 30;
-    ctx.shadowOffsetY = 10;
-    ctx.fillStyle = "#e9d8b4";
-    ctx.fillRect(x, y, w, h);
-    ctx.restore();
-  }
-
-  function drawBook(x, y, w, h) {
-    ctx.fillStyle = "#ecd9b0";
-    ctx.fillRect(x, y, w, h);
-
-    ctx.strokeStyle = "#8a6a3f";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(x + 10, y + 10, w - 20, h - 20);
-
-    // binding
-    ctx.strokeStyle = "#6b4f2b";
-    for (let i = 0; i < h - 80; i += 24) {
-      ctx.beginPath();
-      ctx.moveTo(x + 48, y + 40 + i);
-      ctx.lineTo(x + 48, y + 52 + i);
-      ctx.stroke();
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = 540;
+      draw();
     }
-  }
 
-  function drawPageContent(x, y, p) {
-    ctx.fillStyle = "#5a3c1d";
-    ctx.font = "28px Georgia";
-    ctx.textAlign = "center";
+    window.addEventListener("resize", resize);
+    resize();
 
-    if (p === 0) {
-      ctx.fillText("ARTIFICER NOTEBOOK", x + 390, y + 120);
+    function drawNotebook() {
+      const bookW = 760;
+      const bookH = 420;
+      const x = (canvas.width - bookW) / 2;
+      const y = (canvas.height - bookH) / 2;
+
+      // background strip (canvas only)
+      ctx.fillStyle = "#0d0d0d";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // shadow
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.6)";
+      ctx.shadowBlur = 30;
+      ctx.shadowOffsetY = 10;
+
+      ctx.fillStyle = "#f0deb8";
+      ctx.fillRect(x, y, bookW, bookH);
+      ctx.restore();
+
+      // border
+      ctx.strokeStyle = "#6b4f2b";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(x + 10, y + 10, bookW - 20, bookH - 20);
+
+      // binding
+      ctx.strokeStyle = "#5a3c1d";
+      ctx.lineWidth = 3;
+      for (let i = 0; i < bookH - 80; i += 26) {
+        ctx.beginPath();
+        ctx.moveTo(x + 60, y + 40 + i);
+        ctx.lineTo(x + 60, y + 54 + i);
+        ctx.stroke();
+      }
+
+      // page content
+      const content = pages[page];
+      ctx.fillStyle = "#3b2a14";
+      ctx.textAlign = "center";
+
+      ctx.font = "28px Georgia";
+      ctx.fillText(content.title, canvas.width / 2 + 20, y + 110);
+
       ctx.font = "18px Georgia";
-      ctx.fillText("Arcane Creations & Concepts", x + 390, y + 160);
+      content.body.forEach((line, i) => {
+        ctx.fillText(line, canvas.width / 2 + 20, y + 160 + i * 28);
+      });
+
+      // buttons
+      drawButton(x + 120, y + bookH - 70, "< Prev");
+      drawButton(x + bookW - 220, y + bookH - 70, "Next >");
     }
 
-    if (p === 1) {
-      ctx.fillText("Mana Circuit Diagram", x + 390, y + 120);
+    function drawButton(x, y, text) {
+      ctx.fillStyle = "#d8c59a";
+      ctx.fillRect(x, y, 100, 40);
+      ctx.strokeStyle = "#6b4f2b";
+      ctx.strokeRect(x, y, 100, 40);
+
+      ctx.fillStyle = "#3b2a14";
+      ctx.font = "16px Georgia";
+      ctx.textAlign = "center";
+      ctx.fillText(text, x + 50, y + 26);
     }
 
-    if (p === 2) {
-      ctx.fillText("Spell Logic Gates", x + 390, y + 120);
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawNotebook();
     }
 
-    if (p === 3) {
-      ctx.fillText("Automaton Core", x + 390, y + 120);
+    function handleClick(e) {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+
+      const bookW = 760;
+      const bookH = 420;
+      const x = (canvas.width - bookW) / 2;
+      const y = (canvas.height - bookH) / 2;
+
+      // prev
+      if (
+        mx > x + 120 &&
+        mx < x + 220 &&
+        my > y + bookH - 70 &&
+        my < y + bookH - 30
+      ) {
+        page = (page - 1 + pages.length) % pages.length;
+        draw();
+      }
+
+      // next
+      if (
+        mx > x + bookW - 220 &&
+        mx < x + bookW - 120 &&
+        my > y + bookH - 70 &&
+        my < y + bookH - 30
+      ) {
+        page = (page + 1) % pages.length;
+        draw();
+      }
     }
 
-    if (p === 4) {
-      ctx.fillStyle = "#8b2c2c";
-      ctx.fillText("FAILED EXPERIMENT", x + 390, y + 160);
-    }
-  }
-
-  function drawButtons(x, y, w, h) {
-    drawBtn(x + 60, y + h - 56, "◀ Prev", () => page = (page - 1 + pages) % pages);
-    drawBtn(x + w - 140, y + h - 56, "Next ▶", () => page = (page + 1) % pages);
-  }
-
-  function drawBtn(x, y, label, action) {
-    ctx.fillStyle = "#c9a86a";
-    ctx.fillRect(x, y, 90, 34);
-    ctx.strokeStyle = "#7b5a2f";
-    ctx.strokeRect(x, y, 90, 34);
-
-    ctx.fillStyle = "#3b2a14";
-    ctx.font = "14px Georgia";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(label, x + 45, y + 17);
-
-    canvas.onclick = e => {
-      const r = canvas.getBoundingClientRect();
-      const mx = e.clientX - r.left;
-      const my = e.clientY - r.top;
-      if (mx > x && mx < x + 90 && my > y && my < y + 34) action();
-    };
-  }
-
-  function loop() {
+    canvas.addEventListener("click", handleClick);
     draw();
-    requestAnimationFrame(loop);
-  }
 
-  loop();
+    return () => {
+      canvas.removeEventListener("click", handleClick);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
 
-  return () => window.removeEventListener("resize", resize);
-}, []);
+  return <canvas ref={canvasRef} />;
+}
