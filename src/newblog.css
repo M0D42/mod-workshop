@@ -56,7 +56,7 @@ body {
     overflow: hidden;
 
     background-image: url('/castle.png');
-   background-size: 400px auto;
+   background-size: 100px auto;
 
     background-repeat: repeat;
     background-position: top center;
