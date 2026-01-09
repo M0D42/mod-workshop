@@ -13,7 +13,7 @@
     margin-top: 0;
     margin-bottom: 18px;
     font-size: 2rem;
-    color: #ce7eff;
+    color: #CC5500;
 }
 
 .contact-row {
@@ -64,7 +64,7 @@
 
 .contact-mail h3 {
     margin: 0;
-    color: #ce7eff;
+    color: #CC5500;
     font-size: 1.2rem;
 }
 
@@ -74,7 +74,7 @@
     border: none;
     border-radius: 6px;
     font-size: 1rem;
-    background: #1b1330;
+    background: #CC5500;
     color: #fff;
     outline: none;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
@@ -83,7 +83,7 @@
 
 .contact-mail input:focus {
     border: 2px solid #ce7eff;
-    background: #22143a;
+    background:#CC5500;
 }
 .contact-mail textarea {
     width: 100%;
@@ -92,7 +92,7 @@
     border: none;
     border-radius: 6px;
     font-size: 1rem;
-    background: #1b1330;
+    background: #CC5500;
     color: #fff;
     resize: vertical; /* allows user to resize vertically */
     outline: none;
@@ -103,12 +103,12 @@
 
 .contact-mail textarea:focus {
     border: 2px solid #ce7eff;
-    background: #22143a;
+    background: #CC5500;
 }
 .contact-mail button {
     margin-top: 8px;
     padding: 10px 28px;
-    background: linear-gradient(90deg, #ce7eff 60%, #8418c8 100%);
+    background: linear-gradient(90deg,#CC5500 60%, #8418c8 100%);
     color: #18181b;
     border: none;
     border-radius: 6px;
@@ -121,7 +121,7 @@
 
 .contact-mail button:hover,
 .contact-mail button:focus {
-    background: linear-gradient(90deg, #8418c8 60%, #ce7eff 100%);
+    background: linear-gradient(90deg, #CC5500 60%, #ce7eff 100%);
     color: #fff;
     transform: translateY(-2px) scale(1.04);
     outline: none;
