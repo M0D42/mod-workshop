@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom"; // <-- Use HashRouter
+import { Routes, Route } from "react-router-dom"; // Removed Router import
 import "./App.css";
 import Navbar from "./navbar.jsx";
 import Home from "./home.jsx";
 import ContactMe from "./contactme.jsx";
-
-// import Blog from './Blog.jsx'; // Uncomment if you have a Blog page
 
 function App() {
     const [showNavbar, setShowNavbar] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
+            // Logic to show navbar after scrolling 80% of the viewport height
             if (window.scrollY > window.innerHeight * 0.8) {
                 setShowNavbar(true);
             } else {
@@ -23,23 +22,23 @@ function App() {
     }, []);
 
     return (
-        <Router>
+        <> {/* Used a React Fragment instead of <Router> */}
             {showNavbar && <Navbar />}
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/contact" element={<ContactMe />} />
                 <Route
-                path="/blog"
-                element={
-                    <div style={{ padding: "2rem", textAlign: "center" }}>
-                    <h2>Blog</h2>
-                    <p>Coming Soon!</p>
-                    </div>
-                }
+                    path="/blog"
+                    element={
+                        <div style={{ padding: "2rem", textAlign: "center", color: "white" }}>
+                            <h2>Blog</h2>
+                            <p>Coming Soon!</p>
+                        </div>
+                    }
                 />
             </Routes>
-        </Router>
+        </>
     );
 }
 
