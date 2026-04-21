@@ -12,9 +12,9 @@ const Hero = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight * 0.8;
 
-        // Load dragon sprite
+        // Load dragon sprite from public folder
         const dragonImg = new Image();
-        dragonImg.src = 'https://lazfar.wordpress.com/wp-content/uploads/2012/10/flying-dragon2.gif';
+        dragonImg.src = '/flying-dragon2.gif'; // From public folder
 
         // Dragon object
         const dragon = {
@@ -123,20 +123,24 @@ const Hero = () => {
             ctx.fillText(`HP: ${Math.floor(castle.health)}`, castle.x + 70, castle.y - 37);
         }
 
-        // Draw dragon with sprite image
+        // Draw dragon with sprite image (flipped)
         function drawDragon() {
-            if (dragonImg.complete) {
-                // Draw dragon sprite
-                if (dragon.direction === 1) {
-                    ctx.drawImage(dragonImg, dragon.x, dragon.y, dragon.width, dragon.height);
-                } else {
+            if (dragonImg.complete && dragonImg.naturalHeight !== 0) {
+                ctx.save();
+
+                // Flip dragon based on direction
+                if (dragon.direction === -1) {
                     // Flip horizontally
-                    ctx.save();
                     ctx.translate(dragon.x + dragon.width, dragon.y);
                     ctx.scale(-1, 1);
                     ctx.drawImage(dragonImg, 0, 0, dragon.width, dragon.height);
-                    ctx.restore();
+                } else {
+                    // Normal direction
+                    ctx.translate(dragon.x, dragon.y);
+                    ctx.drawImage(dragonImg, 0, 0, dragon.width, dragon.height);
                 }
+
+                ctx.restore();
 
                 // Fire breath indicator
                 ctx.fillStyle = 'rgba(255, 100, 0, 0.5)';
@@ -205,5 +209,174 @@ const Hero = () => {
                 ctx.arc(defender.x + defender.width / 2, defender.y + 10, 8, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.strokeStyle = '#ff6600';
-                ctx.lineWidth =](#)*
-
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+        }
+
+        // Check collisions
+        function checkCollisions() {
+            fireballs.forEach((fireball, fIndex) => {
+                // Check collision with defenders
+                defenders.forEach((defender) => {
+                    if (!defender.alive) return;
+                    const distance = Math.hypot(
+                        fireball.x - (defender.x + defender.width / 2),
+                        fireball.y - (defender.y + defender.height / 2)
+                    );
+
+                    if (distance < fireball.radius + 10) {
+                        defender.alive = false;
+                        fireballs.splice(fIndex, 1);
+                        score += 10;
+                    }
+                });
+
+                // Check collision with castle
+                if (
+                    fireball.x > castle.x &&
+                    fireball.x < castle.x + castle.width &&
+                    fireball.y > castle.y - 30 &&
+                    fireball.y < castle.y + castle.height
+                ) {
+                    castle.health -= 5;
+                    fireballs.splice(fIndex, 1);
+                }
+            });
+        }
+
+        // Shoot fireballs
+        let shootCounter = 0;
+        function shootFireball() {
+            if (!gameActive) return;
+            shootCounter++;
+            if (shootCounter > 30) {
+                const fireball = {
+                    x: dragon.direction === 1 ? dragon.x + dragon.width : dragon.x,
+                    y: dragon.y + dragon.height / 2,
+                    velocityX: dragon.direction === 1 ? 4 : -4,
+                    velocityY: (Math.random() - 0.5) * 2,
+                    radius: 12,
+                };
+                fireballs.push(fireball);
+                shootCounter = 0;
+            }
+        }
+
+        // Spawn new round
+        function spawnNewRound() {
+            dragon.x = Math.random() * (canvas.width - 100);
+            dragon.y = Math.random() * (canvas.height * 0.3) + 50;
+            dragon.direction = Math.random() > 0.5 ? 1 : -1;
+            dragon.velocityX = dragon.direction === 1 ? 2 : -2;
+
+            castle.x = Math.random() * (canvas.width - 300) + 100;
+            castle.health = 100;
+            fireballs = [];
+            createDefenders();
+            gameActive = true;
+        }
+
+        // Animation loop
+        function animate() {
+            // Clear canvas with night sky
+            ctx.fillStyle = '#001a33';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw stars (background)
+            ctx.fillStyle = '#ffffff';
+            for (let i = 0; i < 100; i++) {
+                const x = (i * 137.508) % canvas.width;
+                const y = (i * 73.4) % (canvas.height * 0.5);
+                ctx.fillRect(x, y, 2, 2);
+            }
+
+            // Draw moon
+            ctx.fillStyle = '#ffff99';
+            ctx.beginPath();
+            ctx.arc(canvas.width - 100, 80, 60, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#001a33';
+            ctx.beginPath();
+            ctx.arc(canvas.width - 85, 70, 60, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (gameActive) {
+                // Update dragon position
+                dragon.y += Math.sin(dragon.x * 0.01) * 0.3;
+                dragon.x += dragon.velocityX;
+
+                // Change direction at screen edges
+                if (dragon.x > canvas.width + 50 || dragon.x < -50) {
+                    spawnNewRound();
+                }
+
+                // Shoot fireballs
+                shootFireball();
+
+                // Check collisions
+                checkCollisions();
+
+                // Check if castle is destroyed
+                if (castle.health <= 0) {
+                    gameActive = false;
+                }
+            }
+
+            // Draw everything
+            drawCastle();
+            drawDefenders();
+            drawDragon();
+            drawFireballs();
+
+            // Draw UI
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText(`Score: ${score}`, 20, 40);
+
+            if (!gameActive) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ff0000';
+                ctx.font = 'bold 48px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('CASTLE DESTROYED!', canvas.width / 2, canvas.height / 2 - 40);
+                ctx.fillStyle = '#ffff00';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText(`Final Score: ${score}`, canvas.width / 2, canvas.height / 2 + 40);
+                ctx.fillText('Click to play again', canvas.width / 2, canvas.height / 2 + 100);
+                ctx.textAlign = 'left';
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Click to restart
+        canvas.addEventListener('click', () => {
+            if (!gameActive) {
+                score = 0;
+                spawnNewRound();
+            }
+        });
+
+        createDefenders();
+        animate();
+
+        // Handle window resize
+        const handleResize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 0.8;
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
+        <div className="Hero">
+            <canvas ref={canvasRef} style={{ display: 'block' }} />
+        </div>
+    );
+};
+
+export default Hero;
