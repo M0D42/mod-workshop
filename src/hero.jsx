@@ -15,9 +15,7 @@ const Hero = () => {
         // Load dragon sprite from public folder
         const dragonImg = new Image();
         dragonImg.src = '/flying-dragon2.gif'; // From public folder
-        dragonImg.onload = () => {
-   animate();
-};
+
         // Dragon object
         const dragon = {
             x: Math.random() * (canvas.width - 100),
@@ -129,7 +127,9 @@ const Hero = () => {
         function drawDragon() {
             if (dragonImg.complete && dragonImg.naturalHeight !== 0) {
                 ctx.save();
-
+                    dragonImg.onload = () => {
+                           animate();
+                        };
                 // Flip dragon based on direction
                 if (dragon.direction === 1) {
                     // Flip horizontally
