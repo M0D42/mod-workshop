@@ -129,7 +129,7 @@ const Hero = () => {
                 ctx.save();
 
                 // Flip dragon based on direction
-                if (dragon.direction === -1) {
+                if (dragon.direction === 1) {
                     // Flip horizontally
                     ctx.translate(dragon.x + dragon.width, dragon.y);
                     ctx.scale(-1, 1);
