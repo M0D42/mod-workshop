@@ -15,7 +15,9 @@ const Hero = () => {
         // Load dragon sprite from public folder
         const dragonImg = new Image();
         dragonImg.src = '/flying-dragon2.gif'; // From public folder
-
+        dragonImg.onload = () => {
+   animate();
+};
         // Dragon object
         const dragon = {
             x: Math.random() * (canvas.width - 100),
